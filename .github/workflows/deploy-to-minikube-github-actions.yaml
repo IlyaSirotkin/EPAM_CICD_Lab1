@@ -7,17 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     name: build Node.js Docker Image and deploy to minikube
     steps:
-    - name: Setup minikube with docker
-      id: minikube
-      uses: medyagh/setup-minikube@latest
-      with:
-        driver: docker
-    - name: Start minikube
-      run: |
-        minikube config set cpus 2 
-        minikube config set memory 2048
-        minikube start
     - uses: actions/checkout@v2
+    - name: Start minikube
+      uses: medyagh/setup-minikube@master
     - name: Try the cluster !
       run: kubectl get pods -A
     - name: Build image
@@ -26,26 +18,10 @@ jobs:
           eval $(minikube -p minikube docker-env)
           docker build -f ./Dockerfile -t devopshint/node-app:latest .
           echo -n "verifying images:"
-          docker images 
+          docker images         
     - name: Deploy to minikube
       run:
         kubectl apply -f k8s-node-app.yaml
-    - name: Check Docker status
-      run: minikube ssh -- systemctl status docker
-    - name: Verify node-app pod
-      run: 
-        kubectl get pods --all-namespaces
-    - name: Verify node-app service
-      run: 
-        kubectl get svc --all-namespaces
-    - name: Verify node-app deployment
-      run: 
-        kubectl get deployments --all-namespaces
-    - name: Check events
-      run: kubectl get events -n default --sort-by='.lastTimestamp'
-    - name: Verify Docker container
-      run: |
-        minikube ssh -- docker ps
     - name: Test service URLs
       run: |
           minikube service list
