@@ -30,10 +30,7 @@ jobs:
         kubectl get pods --all-namespaces
     - name: Verify Docker container
       run: |
-        minikube ssh
-        docker ps
-        docker ps -a
-        exit
+        minikube ssh -- docker ps
     - name: Test service URLs
       run: |
           minikube service list
