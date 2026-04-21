@@ -9,6 +9,9 @@ jobs:
     steps:
     - name: setup-minikube
       uses: medyagh/setup-minikube@v0.0.21
+    - name: start minikube
+      id: minikube
+      uses: medyagh/setup-minikube@latest
     - uses: actions/checkout@v2
     - name: Start minikube
       uses: medyagh/setup-minikube@master
