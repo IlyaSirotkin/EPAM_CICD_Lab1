@@ -28,6 +28,12 @@ jobs:
     - name: Verify node-app pod
       run: 
         kubectl get pods --all-namespaces
+    - name: Verify Docker container
+      run: |
+        minikube ssh
+        docker ps
+        docker ps -a
+        exit
     - name: Test service URLs
       run: |
           minikube service list
