@@ -7,14 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     name: build Node.js Docker Image and deploy to minikube
     steps:
-    - name: setup-minikube
-      uses: medyagh/setup-minikube@v0.0.21
     - name: start minikube
       id: minikube
       uses: medyagh/setup-minikube@latest
     - uses: actions/checkout@v2
-    - name: Start minikube
-      uses: medyagh/setup-minikube@master
     - name: Try the cluster !
       run: kubectl get pods -A
     - name: Build image
