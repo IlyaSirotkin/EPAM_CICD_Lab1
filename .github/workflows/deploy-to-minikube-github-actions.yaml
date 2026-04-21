@@ -30,6 +30,9 @@ jobs:
     - name: Verify node-app pod
       run: 
         kubectl get pods --all-namespaces
+    - name: Verify node-app pod
+      run: 
+        kubectl get svc --all-namespaces
     - name: Verify Docker container
       run: |
         minikube ssh -- docker ps
